@@ -1,5 +1,4 @@
 [![Linux GCC](https://github.com/sintef-ocean/conan-mavsdk/workflows/Linux%20GCC/badge.svg)](https://github.com/sintef-ocean/conan-mavsdk/actions?query=workflow%3A"Linux+GCC")
-[![Linux Clang](https://github.com/sintef-ocean/conan-mavsdk/workflows/Linux%20Clang/badge.svg)](https://github.com/sintef-ocean/conan-mavsdk/actions?query=workflow%3A"Linux+Clang")
 [![Windows MSVC](https://github.com/sintef-ocean/conan-mavsdk/workflows/Windows%20MSVC/badge.svg)](https://github.com/sintef-ocean/conan-mavsdk/actions?query=workflow%3A"Windows+MSVC")
 
 
@@ -8,7 +7,7 @@
 1. Add remote to conan's package [remotes](https://docs.conan.io/2/reference/commands/remote.html)
 
    ```bash
-   $ conan remote add sintef https://artifactory.smd.sintef.no/artifactory/api/conan/conan-local
+   $ conan remote add sintef https://package.smd.sintef.no
    ```
 
 2. Using [*conanfile.txt*](https://docs.conan.io/2/reference/conanfile_txt.html) and *cmake* in your project.
