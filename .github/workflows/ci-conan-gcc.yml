@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         profile: [gcc]
-        compiler_version: [11, 12]
+        compiler_version: [12, 14]
         version: [0.39.0]
         build_type: [Debug, Release]
         shared: ["True", "False"]
@@ -32,13 +32,13 @@ jobs:
             linux: debian:bookworm
             compiler_version: 12
           -
-            linux: ubuntu:22.04
-            compiler_version: 11
+            linux: debian:trixie
+            compiler_version: 14
     container:
       image: ${{ matrix.linux }}
       options: -u 0
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install prerequisites
         run: |
           apt-get update
@@ -54,8 +54,10 @@ jobs:
           conan config install ${{ env.CONFIG_URL }}  --type git -sf profiles -tf profiles
       - name: Conan create
         run: |
-          conan create -s build_type=${{ matrix.build_type }} \
-            -s compiler.version=${{ matrix.compiler_version }} \
+          conan create -s:h build_type=${{ matrix.build_type }} \
+            -s:b build_type=${{ matrix.build_type }} \
+            -s:h compiler.version=${{ matrix.compiler_version }} \
+            -s:b compiler.version=${{ matrix.compiler_version }} \
             -pr:b=${{ matrix.profile }} -pr:h=${{ matrix.profile }} \
             -b missing -b outdated -b '${{ env.package_name }}*' \
             -o ${{ env.package_name }}*:shared=${{ matrix.shared }} \
@@ -63,4 +65,4 @@ jobs:
             .
       - name: Conan upload
         run: |
-          conan upload --confirm -r sintef '${{ env.package_name }}*' --force
+          conan upload --confirm -r sintef '${{ env.package_name }}*'
