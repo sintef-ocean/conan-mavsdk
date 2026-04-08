@@ -78,6 +78,11 @@ class MAVSDKConan(ConanFile):
                         'add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third_party/gtest EXCLUDE_FROM_ALL)',
                         '')
 
+        replace_in_file(self, join(self.source_folder, "src", "plugins", "ftp", "fs.h"),
+                        "#include <string>",
+                        """#include <string>
+                        #include <cstdint>""")
+
         # Link gtest from conan
         tests = [(join(self.source_folder, "src", "integration_tests", "CMakeLists.txt"), "integration_tests"),
                  (join(self.source_folder, "src", "cmake", "unit_tests.cmake"), "unit_tests")]
